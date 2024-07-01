@@ -12,7 +12,7 @@
     "build": "ng build lib",
     "deploy": "deploy-to-git",
     "prepare": "ng build lib --configuration production",
-    "publish": "npm publish ./dist/lib",
+    "publish": "npm publish ./dist/lib --registry=https://registry.npmjs.org",
     "predeploy": "rimraf ./dist/app && mkdirp ./dist/app"
   },
   "repository": {

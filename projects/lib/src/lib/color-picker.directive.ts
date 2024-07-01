@@ -16,7 +16,7 @@ const NG_DEV_MODE = typeof ngDevMode === 'undefined' || !!ngDevMode;
 
 @Directive({
   selector: '[colorPicker]',
-  exportAs: 'ngxColorPicker'
+  exportAs: 'ngyColorPicker'
 })
 export class ColorPickerDirective implements OnChanges, OnDestroy {
   private dialog: any;

@@ -1,16 +1,12 @@
 # Angular Color Picker
 
-<a href="https://badge.fury.io/js/ngx-color-picker"><img src="https://badge.fury.io/js/ngx-color-picker.svg" align="right" alt="npm version" height="18"></a>
+<a href="https://badge.fury.io/js/ngy-color-picker"><img src="https://badge.fury.io/js/ngy-color-picker.svg" align="right" alt="npm version" height="18"></a>
 
 This is a simple color picker based on the cool angular2-color-picker by Alberplz.
 
-This documentation is for the latest version which requires Angular 5 or newer. For Angular 4 you need to use the latest 4.x.x version. Documentation for the 4.x.x can be found from <a href="https://github.com/zefoy/ngx-color-picker/tree/4.x.x/">here</a>.
+This documentation is for the latest version which requires Angular 18 or newer. For older versions of Angular, you need to use the corresponding version of ngx-color-picker. Documentation for previous versions can be found <a href="https://www.npmjs.com/package/ngx-color-picker">here</a>.
 
-### Quick links
-
-[Example application](https://zefoy.github.io/ngx-color-picker/)
- |
-[StackBlitz example](https://stackblitz.com/github/zefoy/ngx-color-picker/tree/master)
+[Example application](https://rgerhardt-pressmind.github.io/ngy-color-picker/)
 
 ### Building the library
 
@@ -29,13 +25,13 @@ npm run start
 ### Installing and usage
 
 ```bash
-npm install ngx-color-picker --save
+npm install ngy-color-picker --save
 ```
 
 ##### Load the module for your app:
 
 ```javascript
-import { ColorPickerModule } from 'ngx-color-picker';
+import { ColorPickerModule } from 'ngy-color-picker';
 
 @NgModule({
   ...

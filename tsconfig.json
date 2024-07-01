@@ -19,7 +19,7 @@
       "es2022"
     ],
     "paths": {
-      "ngx-color-picker": [
+      "ngy-color-picker": [
         "./projects/lib/src/public-api.ts"
       ]
     }
