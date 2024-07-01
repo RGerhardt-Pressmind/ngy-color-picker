@@ -6,8 +6,6 @@ This is a simple color picker based on the cool angular2-color-picker by Alberpl
 
 This documentation is for the latest version which requires Angular 18 or newer. For older versions of Angular, you need to use the corresponding version of ngx-color-picker. Documentation for previous versions can be found <a href="https://www.npmjs.com/package/ngx-color-picker">here</a>.
 
-[Example application](https://rgerhardt-pressmind.github.io/ngy-color-picker/)
-
 ### Building the library
 
 ```bash
