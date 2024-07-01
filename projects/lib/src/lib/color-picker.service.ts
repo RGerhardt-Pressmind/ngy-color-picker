@@ -9,7 +9,8 @@ export class ColorPickerService {
   private active: ColorPickerComponent | null = null;
 
   public setActive(active: ColorPickerComponent | null): void {
-    if (this.active && this.active !== active && this.active.cpDialogDisplay !== 'inline') {
+    if (this.active && this.active !== active && this.active.cpDialogDisplay !== 'inline')
+    {
       this.active.closeDialog();
     }
 
@@ -19,11 +20,16 @@ export class ColorPickerService {
   public hsva2hsla(hsva: Hsva): Hsla {
     const h = hsva.h, s = hsva.s, v = hsva.v, a = hsva.a;
 
-    if (v === 0) {
+    if (v === 0)
+    {
       return new Hsla(h, 0, 0, a);
-    } else if (s === 0 && v === 1) {
+    }
+    else if (s === 0 && v === 1)
+    {
       return new Hsla(h, 1, 1, a);
-    } else {
+    }
+    else
+    {
       const l = v * (2 - s) / 2;
 
       return new Hsla(h, v * s / (1 - Math.abs(2 * l - 1)), l, a);
@@ -34,9 +40,12 @@ export class ColorPickerService {
     const h = Math.min(hsla.h, 1), s = Math.min(hsla.s, 1);
     const l = Math.min(hsla.l, 1), a = Math.min(hsla.a, 1);
 
-    if (l === 0) {
+    if (l === 0)
+    {
       return new Hsva(h, 0, 0, a);
-    } else {
+    }
+    else
+    {
       const v = l + s * (1 - Math.abs(2 * l - 1)) / 2;
 
       return new Hsva(h, 2 * (v - l) / v, v, a);
@@ -54,7 +63,8 @@ export class ColorPickerService {
     const q = v * (1 - f * s);
     const t = v * (1 - (1 - f) * s);
 
-    switch (i % 6) {
+    switch (i % 6)
+    {
       case 0:
         r = v, g = t, b = p;
         break;
@@ -91,9 +101,12 @@ export class ColorPickerService {
   public rgbaToCmyk(rgba: Rgba): Cmyk {
     const k: number = 1 - Math.max(rgba.r, rgba.g, rgba.b);
 
-    if (k === 1) {
+    if (k === 1)
+    {
       return new Cmyk(0, 0, 0, 1, rgba.a);
-    } else {
+    }
+    else
+    {
       const c = (1 - rgba.r - k) / (1 - k);
       const m = (1 - rgba.g - k) / (1 - k);
       const y = (1 - rgba.b - k) / (1 - k);
@@ -114,10 +127,14 @@ export class ColorPickerService {
 
     s = (max === 0) ? 0 : d / max;
 
-    if (max === min) {
+    if (max === min)
+    {
       h = 0;
-    } else {
-      switch (max) {
+    }
+    else
+    {
+      switch (max)
+      {
         case r:
           h = (g - b) / d + (g < b ? 6 : 0);
           break;
@@ -141,7 +158,8 @@ export class ColorPickerService {
     /* eslint-disable no-bitwise */
     let hex = '#' + ((1 << 24) | (rgba.r << 16) | (rgba.g << 8) | rgba.b).toString(16).substr(1);
 
-    if (allowHex8) {
+    if (allowHex8)
+    {
       hex += ((1 << 8) | Math.round(rgba.a * 255)).toString(16).substr(1);
     }
     /* eslint-enable no-bitwise */
@@ -187,7 +205,8 @@ export class ColorPickerService {
       }
     ];
 
-    if (allowHex8) {
+    if (allowHex8)
+    {
       stringParsers.push({
         re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})?$/,
         parse: function(execResult: any) {
@@ -197,7 +216,9 @@ export class ColorPickerService {
             parseInt(execResult[4] || 'FF', 16) / 255);
         }
       });
-    } else {
+    }
+    else
+    {
       stringParsers.push({
         re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})$/,
         parse: function(execResult: any) {
@@ -219,16 +240,22 @@ export class ColorPickerService {
       }
     });
 
-    for (const key in stringParsers) {
-      if (stringParsers.hasOwnProperty(key)) {
+    for (const key in stringParsers)
+    {
+      if (stringParsers.hasOwnProperty(key))
+      {
         const parser = stringParsers[key];
 
         const match = parser.re.exec(colorString), color: any = match && parser.parse(match);
 
-        if (color) {
-          if (color instanceof Rgba) {
+        if (color)
+        {
+          if (color instanceof Rgba)
+          {
             hsva = this.rgbaToHsva(color);
-          } else if (color instanceof Hsla) {
+          }
+          else if (color instanceof Hsla)
+          {
             hsva = this.hsla2hsva(color);
           }
 
@@ -241,31 +268,39 @@ export class ColorPickerService {
   }
 
   public outputFormat(hsva: Hsva, outputFormat: string, alphaChannel: string | null): string {
-    if (outputFormat === 'auto') {
+    if (outputFormat === 'auto')
+    {
       outputFormat = hsva.a < 1 ? 'rgba' : 'hex';
     }
 
-    switch (outputFormat) {
+    switch (outputFormat)
+    {
       case 'hsla':
         const hsla = this.hsva2hsla(hsva);
 
         const hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100),
           Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);
 
-        if (hsva.a < 1 || alphaChannel === 'always') {
+        if (hsva.a < 1 || alphaChannel === 'always')
+        {
           return 'hsla(' + hslaText.h + ',' + hslaText.s + '%,' + hslaText.l + '%,' +
             hslaText.a + ')';
-        } else {
+        }
+        else
+        {
           return 'hsl(' + hslaText.h + ',' + hslaText.s + '%,' + hslaText.l + '%)';
         }
 
       case 'rgba':
         const rgba = this.denormalizeRGBA(this.hsvaToRgba(hsva));
 
-        if (hsva.a < 1 || alphaChannel === 'always') {
+        if (hsva.a < 1 || alphaChannel === 'always')
+        {
           return 'rgba(' + rgba.r + ',' + rgba.g + ',' + rgba.b + ',' +
             Math.round(rgba.a * 100) / 100 + ')';
-        } else {
+        }
+        else
+        {
           return 'rgb(' + rgba.r + ',' + rgba.g + ',' + rgba.b + ')';
         }
 

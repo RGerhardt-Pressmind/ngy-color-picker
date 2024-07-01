@@ -1,4 +1,14 @@
-import { Directive, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
+import {
+  Directive,
+  Input,
+  Output,
+  EventEmitter,
+  HostListener,
+  ElementRef,
+  InputSignal,
+  input,
+  OutputEmitterRef, output
+} from '@angular/core';
 
 export type ColorMode = 'color' | 'c' | '1' |
   'grayscale' | 'g' | '2' | 'presets' | 'p' | '3';
@@ -33,38 +43,47 @@ export function calculateAutoPositioning(elBounds: BoundingRectangle, triggerElB
   const collisionAll = collisionTop && collisionBottom && collisionLeft && collisionRight;
 
   // Generate X & Y position values
-  if (collisionBottom) {
+  if (collisionBottom)
+  {
     usePositionY = 'top';
   }
 
-  if (collisionTop) {
+  if (collisionTop)
+  {
     usePositionY = 'bottom';
   }
 
-  if (collisionLeft) {
+  if (collisionLeft)
+  {
     usePositionX = 'right';
   }
 
-  if (collisionRight) {
+  if (collisionRight)
+  {
     usePositionX = 'left';
   }
 
 
   // Choose the largest gap available
-  if (collisionAll) {
+  if (collisionAll)
+  {
     const postions = ['left', 'right', 'top', 'bottom'];
     return postions.reduce((prev, next) => elBounds[prev] > elBounds[next] ? prev : next);
   }
 
-  if ((collisionLeft && collisionRight)) {
+  if ((collisionLeft && collisionRight))
+  {
     if (collisionTop) { return 'bottom'; }
     if (collisionBottom) { return 'top'; }
+
     return top > bottom ? 'top' : 'bottom';
   }
 
-  if ((collisionTop && collisionBottom)) {
+  if ((collisionTop && collisionBottom))
+  {
     if (collisionLeft) { return 'right'; }
     if (collisionRight) { return 'left'; }
+
     return left > right ? 'left' : 'right';
   }
 
@@ -74,13 +93,15 @@ export function calculateAutoPositioning(elBounds: BoundingRectangle, triggerElB
 export function detectIE(): boolean | number {
   let ua = '';
 
-  if (typeof navigator !== 'undefined') {
+  if (typeof navigator !== 'undefined')
+  {
     ua = navigator.userAgent.toLowerCase();
   }
 
   const msie = ua.indexOf('msie ');
 
-  if (msie > 0) {
+  if (msie > 0)
+  {
     // IE 10 or older => return version number
     return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
   }
@@ -93,20 +114,23 @@ export function detectIE(): boolean | number {
   selector: '[text]'
 })
 export class TextDirective {
-  @Input() rg: number;
-  @Input() text: any;
+  rg: InputSignal<number> = input(0);
+  text: InputSignal<any> = input('');
 
-  @Output() newValue = new EventEmitter<any>();
+  newValue: OutputEmitterRef<any> = output<any>();
 
   @HostListener('input', ['$event']) inputChange(event: any): void {
     const value = event.target.value;
 
-    if (this.rg === undefined) {
+    if (this.rg() === undefined)
+    {
       this.newValue.emit(value);
-    } else {
+    }
+    else
+    {
       const numeric = parseFloat(value);
 
-      this.newValue.emit({ v: numeric, rg: this.rg });
+      this.newValue.emit({ v: numeric, rg: this.rg() });
     }
   }
 }
@@ -193,11 +217,16 @@ export class SliderDirective {
     const x = Math.max(0, Math.min(this.getX(event), width));
     const y = Math.max(0, Math.min(this.getY(event), height));
 
-    if (this.rgX !== undefined && this.rgY !== undefined) {
+    if (this.rgX !== undefined && this.rgY !== undefined)
+    {
       this.newValue.emit({ s: x / width, v: (1 - y / height), rgX: this.rgX, rgY: this.rgY });
-    } else if (this.rgX === undefined && this.rgY !== undefined) {
+    }
+    else if (this.rgX === undefined && this.rgY !== undefined)
+    {
       this.newValue.emit({ v: y / height, rgY: this.rgY });
-    } else if (this.rgX !== undefined && this.rgY === undefined) {
+    }
+    else if (this.rgX !== undefined && this.rgY === undefined)
+    {
       this.newValue.emit({ v: x / width, rgX: this.rgX });
     }
   }

@@ -178,13 +178,20 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
 
-    if (this.cpCmykEnabled) {
+    if (this.cpCmykEnabled) 
+    {
       this.format = ColorFormats.CMYK;
-    } else if (this.cpOutputFormat === 'rgba') {
+    } 
+    else if (this.cpOutputFormat === 'rgba') 
+    {
       this.format = ColorFormats.RGBA;
-    } else if (this.cpOutputFormat === 'hsla') {
+    } 
+    else if (this.cpOutputFormat === 'hsla') 
+    {
       this.format = ColorFormats.HSLA;
-    } else {
+    } 
+    else 
+    {
       this.format = ColorFormats.HEX;
     }
 
@@ -199,7 +206,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.cpWidth !== 230 || this.cpDialogDisplay === 'inline') {
+    if (this.cpWidth !== 230 || this.cpDialogDisplay === 'inline')
+    {
       const hueWidth = this.hueSlider.nativeElement.offsetWidth || 140;
       const alphaWidth = this.alphaSlider.nativeElement.offsetWidth || 140;
 
@@ -214,11 +222,13 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public openDialog(color: any, emit: boolean = true): void {
     this.service.setActive(this);
 
-    if (!this.width) {
+    if (!this.width)
+    {
       this.cpWidth = this.directiveElementRef.nativeElement.offsetWidth;
     }
 
-    if (!this.height) {
+    if (!this.height)
+    {
       this.height = 320;
     }
 
@@ -308,20 +318,21 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dialogArrowOffset = 0;
     }
 
-    if (cpDialogDisplay === 'inline') {
+    if (cpDialogDisplay === 'inline')
+    {
       this.dialogArrowSize = 0;
       this.dialogArrowOffset = 0;
     }
 
-    if (cpOutputFormat === 'hex' &&
-        cpAlphaChannel !== 'always' && cpAlphaChannel !== 'forced')
+    if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always' && cpAlphaChannel !== 'forced')
     {
       this.cpAlphaChannel = 'disabled';
     }
   }
 
   public setColorMode(mode: string): void {
-    switch (mode.toString().toUpperCase()) {
+    switch (mode.toString().toUpperCase())
+    {
       case '1':
       case 'C':
       case 'COLOR':
@@ -354,26 +365,33 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public setColorFromString(value: string, emit: boolean = true, update: boolean = true): void {
     let hsva: Hsva | null;
 
-    if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'forced') {
+    if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'forced')
+    {
       hsva = this.service.stringToHsva(value, true);
 
-      if (!hsva && !this.hsva) {
+      if (!hsva && !this.hsva)
+      {
         hsva = this.service.stringToHsva(value, false);
       }
-    } else {
+    }
+    else
+    {
       hsva = this.service.stringToHsva(value, false);
     }
 
-    if (!hsva && !this.hsva) {
+    if (!hsva && !this.hsva)
+    {
       hsva = this.service.stringToHsva(this.fallbackColor, false);
     }
 
-    if (hsva) {
+    if (hsva)
+    {
       this.hsva = hsva;
 
       this.sliderH = this.hsva.h;
 
-      if (this.cpOutputFormat === 'hex' && this.cpAlphaChannel === 'disabled') {
+      if (this.cpOutputFormat === 'hex' && this.cpAlphaChannel === 'disabled')
+      {
         this.hsva.a = 1;
       }
 
@@ -382,9 +400,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onResize(): void {
-    if (this.position === 'fixed') {
+    if (this.position === 'fixed')
+    {
       this.setDialogPosition();
-    } else if (this.cpDialogDisplay !== 'inline') {
+    }
+    else if (this.cpDialogDisplay !== 'inline')
+    {
       this.closeColorPicker();
     }
   }
@@ -406,16 +427,21 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       !this.isDescendant(this.elRef.nativeElement, event.target) &&
       !this.isDescendant(this.directiveElementRef.nativeElement, event.target) &&
       this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0
-    ) {
+    )
+    {
       this.ngZone.run(() => {
-        if (this.cpSaveClickOutside) {
+        if (this.cpSaveClickOutside)
+        {
           this.directiveInstance.colorSelected(this.outputColor);
-        } else {
+        }
+        else
+        {
           this.hsva = null;
 
           this.setColorFromString(this.initialColor, false);
 
-          if (this.cpCmykEnabled) {
+          if (this.cpCmykEnabled)
+          {
             this.directiveInstance.cmykChanged(this.cmykColor);
           }
 
@@ -424,7 +450,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
           this.directiveInstance.colorCanceled();
         }
 
-        if (this.cpCloseClickOutside) {
+        if (this.cpCloseClickOutside)
+        {
           this.closeColorPicker();
         }
       });
@@ -434,11 +461,13 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onAcceptColor(event: Event): void {
     event.stopPropagation();
 
-    if (this.outputColor) {
+    if (this.outputColor)
+    {
       this.directiveInstance.colorSelected(this.outputColor);
     }
 
-    if (this.cpDialogDisplay === 'popup') {
+    if (this.cpDialogDisplay === 'popup')
+    {
       this.closeColorPicker();
     }
   }
@@ -452,8 +481,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.setColorFromString(this.initialColor, true);
 
-    if (this.cpDialogDisplay === 'popup') {
-      if (this.cpCmykEnabled) {
+    if (this.cpDialogDisplay === 'popup')
+    {
+      if (this.cpCmykEnabled)
+      {
         this.directiveInstance.cmykChanged(this.cmykColor);
       }
 
@@ -540,30 +571,38 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onHexInput(value: string | null): void {
-    if (value === null) {
+    if (value === null)
+    {
       this.updateColorPicker();
-    } else {
-      if (value && value[0] !== '#') {
+    }
+    else
+    {
+      if (value && value[0] !== '#')
+      {
         value = '#' + value;
       }
 
       let validHex = /^#([a-f0-9]{3}|[a-f0-9]{6})$/gi;
 
-      if (this.cpAlphaChannel === 'always') {
+      if (this.cpAlphaChannel === 'always')
+      {
         validHex = /^#([a-f0-9]{3}|[a-f0-9]{6}|[a-f0-9]{8})$/gi;
       }
 
       const valid = validHex.test(value);
 
-      if (valid) {
-        if (value.length < 5) {
+      if (valid)
+      {
+        if (value.length < 5)
+        {
           value = '#' + value.substring(1)
             .split('')
             .map(c => c + c)
             .join('');
         }
 
-        if (this.cpAlphaChannel === 'forced') {
+        if (this.cpAlphaChannel === 'forced')
+        {
           value += Math.round(this.hsva.a * 255).toString(16);
         }
 
@@ -584,7 +623,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       rgba.r = value.v / value.rg;
 
       this.hsva = this.service.rgbaToHsva(rgba);
@@ -607,7 +647,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       rgba.b = value.v / value.rg;
 
       this.hsva = this.service.rgbaToHsva(rgba);
@@ -630,7 +671,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       rgba.g = value.v / value.rg;
 
       this.hsva = this.service.rgbaToHsva(rgba);
@@ -651,7 +693,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onHueInput(value: { v: number, rg: number }) {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       this.hsva.h = value.v / value.rg;
 
       this.sliderH = this.hsva.h;
@@ -670,7 +713,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onValueInput(value: { v: number, rg: number }): void {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       this.hsva.v = value.v / value.rg;
 
       this.updateColorPicker();
@@ -687,7 +731,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onAlphaInput(value: { v: number, rg: number }): void {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       this.hsva.a = value.v / value.rg;
 
       this.updateColorPicker();
@@ -706,7 +751,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       hsla.l = value.v / value.rg;
 
       this.hsva = this.service.hsla2hsva(hsla);
@@ -729,7 +775,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       hsla.s = value.v / value.rg;
 
       this.hsva = this.service.hsla2hsva(hsla);
@@ -750,7 +797,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onCyanInput(value: { v: number, rg: number }): void {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       this.cmyk.c = value.v;
 
       this.updateColorPicker(false, true, true);
@@ -767,7 +815,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onMagentaInput(value: { v: number, rg: number }): void {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       this.cmyk.m = value.v;
 
       this.updateColorPicker(false, true, true);
@@ -784,7 +833,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onYellowInput(value: { v: number, rg: number }): void {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       this.cmyk.y = value.v;
 
       this.updateColorPicker(false, true, true);
@@ -801,7 +851,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onBlackInput(value: { v: number, rg: number }): void {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    if (valid) {
+    if (valid)
+    {
       this.cmyk.k = value.v;
 
       this.updateColorPicker(false, true, true);
@@ -818,7 +869,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onAddPresetColor(event: any, value: string): void {
     event.stopPropagation();
 
-    if (!this.cpPresetColors.filter((color) => (color === value)).length) {
+    if (!this.cpPresetColors.filter((color) => (color === value)).length)
+    {
       this.cpPresetColors = this.cpPresetColors.concat(value);
 
       this.directiveInstance.presetColorsChanged(this.cpPresetColors);
@@ -836,7 +888,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   // Private helper functions for the color picker dialog status
 
   private openColorPicker(): void {
-    if (!this.show) {
+    if (!this.show)
+    {
       this.show = true;
       this.hidden = true;
 
@@ -850,16 +903,20 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.directiveInstance.stateChanged(true);
 
-      if (!this.isIE10) {
+      if (!this.isIE10)
+      {
         // The change detection should be run on `mousedown` event only when the condition
         // is met within the `onMouseDown` method.
         this.ngZone.runOutsideAngular(() => {
           // There's no sense to add both event listeners on touch devices since the `touchstart`
           // event is handled earlier than `mousedown`, so we'll get 2 change detections and the
           // second one will be unnecessary.
-          if (SUPPORTS_TOUCH) {
+          if (SUPPORTS_TOUCH)
+          {
             document.addEventListener('touchstart', this.listenerMouseDown);
-          } else {
+          }
+          else
+          {
             document.addEventListener('mousedown', this.listenerMouseDown);
           }
         });
@@ -870,30 +927,38 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private closeColorPicker(): void {
-    if (this.show) {
+    if (this.show)
+    {
       this.show = false;
 
       this.directiveInstance.stateChanged(false);
 
-      if (!this.isIE10) {
-        if (SUPPORTS_TOUCH) {
+      if (!this.isIE10)
+      {
+        if (SUPPORTS_TOUCH)
+        {
           document.removeEventListener('touchstart', this.listenerMouseDown);
-        } else {
+        }
+        else
+        {
           document.removeEventListener('mousedown', this.listenerMouseDown);
         }
       }
 
       window.removeEventListener('resize', this.listenerResize);
 
-      if (!this.cdRef['destroyed']) {
+      if (!this.cdRef['destroyed'])
+      {
         this.cdRef.detectChanges();
       }
     }
   }
 
   private updateColorPicker(emit: boolean = true, update: boolean = true, cmykInput: boolean = false): void {
-    if (this.sliderDimMax) {
-      if (this.cpColorMode === 2) {
+    if (this.sliderDimMax)
+    {
+      if (this.cpColorMode === 2)
+      {
         this.hsva.s = 0;
       }
 
@@ -903,14 +968,20 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       hsla = this.service.hsva2hsla(this.hsva);
 
-      if (!this.cpCmykEnabled) {
+      if (!this.cpCmykEnabled)
+      {
         rgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(this.hsva));
-      } else {
-        if (!cmykInput) {
+      }
+      else
+      {
+        if (!cmykInput)
+        {
           rgba = this.service.hsvaToRgba(this.hsva);
 
           this.cmyk = this.service.denormalizeCMYK(this.service.rgbaToCmyk(rgba));
-        } else {
+        }
+        else
+        {
           rgba = this.service.cmykToRgb(this.service.normalizeCMYK(this.cmyk));
 
           this.hsva = this.service.rgbaToHsva(rgba);
@@ -923,13 +994,15 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       hue = this.service.denormalizeRGBA(this.service.hsvaToRgba(new Hsva(this.sliderH || this.hsva.h, 1, 1, 1)));
 
-      if (update) {
+      if (update)
+      {
         this.hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100),
           Math.round(hsla.a * 100) / 100);
 
         this.rgbaText = new Rgba(rgba.r, rgba.g, rgba.b, Math.round(rgba.a * 100) / 100);
 
-        if (this.cpCmykEnabled) {
+        if (this.cpCmykEnabled)
+        {
           this.cmykText = new Cmyk(this.cmyk.c, this.cmyk.m, this.cmyk.y, this.cmyk.k,
             Math.round(this.cmyk.a * 100) / 100);
         }
@@ -940,9 +1013,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.hexAlpha = this.rgbaText.a;
       }
 
-      if (this.cpOutputFormat === 'auto') {
-        if (this.format !== ColorFormats.RGBA && this.format !== ColorFormats.CMYK && this.format !== ColorFormats.HSLA) {
-          if (this.hsva.a < 1) {
+      if (this.cpOutputFormat === 'auto')
+      {
+        if (this.format !== ColorFormats.RGBA && this.format !== ColorFormats.CMYK && this.format !== ColorFormats.HSLA)
+        {
+          if (this.hsva.a < 1)
+          {
             this.format = this.hsva.a < 1 ? ColorFormats.RGBA : ColorFormats.HEX;
           }
         }
@@ -954,16 +1030,20 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.outputColor = this.service.outputFormat(this.hsva, this.cpOutputFormat, this.cpAlphaChannel);
       this.selectedColor = this.service.outputFormat(this.hsva, 'rgba', null);
 
-      if (this.format !== ColorFormats.CMYK) {
+      if (this.format !== ColorFormats.CMYK)
+      {
         this.cmykColor = '';
-      } else {
-        if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'enabled' ||
-          this.cpAlphaChannel === 'forced')
+      }
+      else
+      {
+        if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'enabled' || this.cpAlphaChannel === 'forced')
         {
           const alpha = Math.round(this.cmyk.a * 100) / 100;
 
           this.cmykColor = `cmyka(${this.cmyk.c},${this.cmyk.m},${this.cmyk.y},${this.cmyk.k},${alpha})`;
-        } else {
+        }
+        else
+        {
           this.cmykColor = `cmyk(${this.cmyk.c},${this.cmyk.m},${this.cmyk.y},${this.cmyk.k})`;
         }
       }
@@ -975,8 +1055,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.hsva.a * this.sliderDimMax.a - 8
       );
 
-      if (emit && lastOutput !== this.outputColor) {
-        if (this.cpCmykEnabled) {
+      if (emit && lastOutput !== this.outputColor)
+      {
+        if (this.cpCmykEnabled)
+        {
           this.directiveInstance.cmykChanged(this.cmykColor);
         }
 
@@ -988,9 +1070,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   // Private helper functions for the color picker dialog positioning
 
   private setDialogPosition(): void {
-    if (this.cpDialogDisplay === 'inline') {
+    if (this.cpDialogDisplay === 'inline')
+    {
       this.position = 'relative';
-    } else {
+    }
+    else
+    {
       let position = 'static', transform = '', style;
 
       let parentNode: any = null, transformNode: any = null;
@@ -999,20 +1084,24 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const dialogHeight = this.dialogElement.nativeElement.offsetHeight;
 
-      while (node !== null && node.tagName !== 'HTML') {
+      while (node !== null && node.tagName !== 'HTML')
+      {
         style = window.getComputedStyle(node);
         position = style.getPropertyValue('position');
         transform = style.getPropertyValue('transform');
 
-        if (position !== 'static' && parentNode === null) {
+        if (position !== 'static' && parentNode === null)
+        {
           parentNode = node;
         }
 
-        if (transform && transform !== 'none' && transformNode === null) {
+        if (transform && transform !== 'none' && transformNode === null)
+        {
           transformNode = node;
         }
 
-        if (position === 'fixed') {
+        if (position === 'fixed')
+        {
           parentNode = transformNode;
 
           break;
@@ -1023,13 +1112,15 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const boxDirective = this.createDialogBox(this.directiveElementRef.nativeElement, (position !== 'fixed'));
 
-      if (this.useRootViewContainer || (position === 'fixed' &&
-         (!parentNode || parentNode instanceof HTMLUnknownElement)))
+      if (this.useRootViewContainer || (position === 'fixed' && (!parentNode || parentNode instanceof HTMLUnknownElement)))
       {
         this.top = boxDirective.top;
         this.left = boxDirective.left;
-      } else {
-        if (parentNode === null) {
+      }
+      else
+      {
+        if (parentNode === null)
+        {
           parentNode = node;
         }
 
@@ -1039,14 +1130,17 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.left = boxDirective.left - boxParent.left;
       }
 
-      if (position === 'fixed') {
+      if (position === 'fixed')
+      {
         this.position = 'fixed';
       }
 
       let usePosition = this.cpPosition;
 
       const dialogBounds = this.dialogElement.nativeElement.getBoundingClientRect();
-      if (this.cpPosition === 'auto') {
+
+      if (this.cpPosition === 'auto')
+      {
         const triggerBounds = this.cpTriggerElement.nativeElement.getBoundingClientRect();
         usePosition = calculateAutoPositioning(dialogBounds, triggerBounds);
       }
@@ -1056,7 +1150,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         : undefined;
       this.cpArrowPosition = undefined;
 
-      switch (usePosition) {
+      switch (usePosition)
+      {
         case 'top':
           this.top -= dialogHeight + this.dialogArrowSize;
           this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
@@ -1094,12 +1189,17 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       const windowInnerWidth = window.innerWidth;
       const elRefClientRect = this.elRef.nativeElement.getBoundingClientRect();
       const bottom = this.top + dialogBounds.height;
-      if (bottom > windowInnerHeight) {
+
+      if (bottom > windowInnerHeight)
+      {
         this.top = windowInnerHeight - dialogBounds.height;
         this.cpArrowPosition = elRefClientRect.x / 2 - 20;
       }
+
       const right = this.left + dialogBounds.width;
-      if (right > windowInnerWidth) {
+
+      if (right > windowInnerWidth)
+      {
         this.left = windowInnerWidth - dialogBounds.width;
         this.cpArrowPosition = elRefClientRect.x / 2 - 20;
       }
@@ -1113,8 +1213,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private isDescendant(parent: any, child: any): boolean {
     let node: any = child.parentNode;
 
-    while (node !== null) {
-      if (node === parent) {
+    while (node !== null)
+    {
+      if (node === parent)
+      {
         return true;
       }
 
