@@ -2,7 +2,7 @@
   "name": "ngy-color-picker",
   "description": "Color picker widget for Angular",
   "bugs": "https://github.com/RGerhardt-Pressmind/ngy-color-picker/issues",
-  "version": "17.0.0",
+  "version": "17.0.1",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -24,7 +24,7 @@
       "repository": "git@github.com:RGerhardt-Pressmind/ngy-color-picker.git",
       "branch": "rg-deploy",
       "folder": "dist/app",
-      "script": "ng build app --configuration production --base-href=ngy-color-picker --delete-output-path=false",
+      "script": "ng build app --configuration production --base-href=ngy-color-picker --delete-output-path=false --output-path=docs",
       "commit": "Publishing $npm_package_version",
       "user": {
         "name": "Robbyn Gerhardt",
