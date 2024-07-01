@@ -24,7 +24,7 @@
       "repository": "git@github.com:RGerhardt-Pressmind/ngy-color-picker.git",
       "branch": "rg-deploy",
       "folder": "dist/app",
-      "script": "ng build app --configuration production --base-href=ngy-color-picker --delete-output-path=false --output-path=docs",
+      "script": "ng build app --configuration production --base-href=ngy-color-picker --delete-output-path=false",
       "commit": "Publishing $npm_package_version",
       "user": {
         "name": "Robbyn Gerhardt",
