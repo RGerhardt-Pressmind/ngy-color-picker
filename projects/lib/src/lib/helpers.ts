@@ -114,23 +114,20 @@ export function detectIE(): boolean | number {
   selector: '[text]'
 })
 export class TextDirective {
-  rg: InputSignal<number> = input(0);
-  text: InputSignal<any> = input('');
+  @Input() rg: number;
+  @Input() text: any;
 
-  newValue: OutputEmitterRef<any> = output<any>();
+  @Output() newValue = new EventEmitter<any>();
 
   @HostListener('input', ['$event']) inputChange(event: any): void {
     const value = event.target.value;
 
-    if (this.rg() === undefined)
-    {
+    if (this.rg === undefined) {
       this.newValue.emit(value);
-    }
-    else
-    {
+    } else {
       const numeric = parseFloat(value);
 
-      this.newValue.emit({ v: numeric, rg: this.rg() });
+      this.newValue.emit({ v: numeric, rg: this.rg });
     }
   }
 }

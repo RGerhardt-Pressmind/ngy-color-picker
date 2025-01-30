@@ -2,7 +2,7 @@
   "name": "ngy-color-picker",
   "description": "Color picker widget for Angular",
   "bugs": "https://github.com/RGerhardt-Pressmind/ngy-color-picker/issues",
-  "version": "17.0.1",
+  "version": "17.0.2",
   "license": "MIT",
   "private": true,
   "scripts": {
